@@ -189,3 +189,112 @@ var {
 } =retObj() ;
 
 console.log(remObj);
+
+//CH02_VID01_Arrow function
+var sum =(x ,y) =>  {return x+y }
+//call
+console.log(sum(55, 6))
+
+//or
+var sum = x => { return x }
+console.log(sum(55))
+
+//CH02_VID02_Arrow function and lexical binding
+var employee= {
+    empName :"Mina Mar" ,
+    empId : 123 ,
+    displayInfo :
+    function ()
+    {
+        var _that =this ;
+        setTimeout(function()
+    {
+        console.log(_that.empName)
+    } , 2000)
+    }
+}
+console.log(employee.displayInfo())
+
+//another solu this problem 
+var employee= {
+    empName :"Mina Maherr" ,
+    empId : 123 ,
+    displayInfo :
+    function ()
+    {
+        setTimeout(()=>
+    {
+        console.log(this.empName)
+    } , 2000)
+    }
+}
+console.log(employee.displayInfo())
+
+// CH02_VID03_"this" and arrow function
+var userName1 = "Mina Maher Mosadef" ;
+
+var newFun =()=>{
+    return this.userName1
+}
+
+var newFun2 =function ()
+{
+    return this.userName1
+}
+var obj3 ={
+    userName1 : "Ali" ,
+    objFun : newFun ,
+    objFun2 :newFun2
+}
+
+console.log(obj3.objFun());
+console.log(obj3.objFun2());
+// CH03_VID01_String API improvement
+//literal creation 
+var myyStr="   welcome to javascript world!! "
+//constructor 
+var newStr = new String("JavaScript String Object") ;
+
+//trim method 
+console.log(myyStr.trim()) ;
+console.log(myyStr.trimLeft()) ;
+console.log(myyStr.trimRight()) ;
+
+//start with
+console.log(newStr.startsWith("Ja"));
+console.log(newStr.endsWith("ct"));
+console.log(newStr.repeat(3));
+console.log(newStr.includes("ing"));
+
+console.log(String.fromCharCode(67));
+console.log(String.fromCharCode(67 ,99));
+console.log(String.fromCharCode(67,99,103));
+
+//CH03_VID02_String template
+var str1="Mina Maher"
+var fullName = `Hi sir my name is ${str1}`;
+console.log(fullName)
+
+// CH03_VID03_String.raw
+var strVal = String.raw `Hi mina \n \t ${str1}`
+console.log(strVal);
+console.log(`Hi mina \n \t ${str1}`)
+
+// CH03_VID04_Tagged Template
+function fun (strings , ...values)
+{
+    let str=" " ;
+    console.log(strings.length) ;
+    for(let item=0 ; item <strings.length ; item++)
+    {
+        str +=strings[item] ;
+        if (values[item]) //check undefined 
+            str +=values[item] ;
+    }
+    return str ;
+}
+
+let x1 =10 ,
+    y1 =20 ;
+var result =fun `this is ${x1} and ${y1} and sum of them ${x1+y1}`;
+console.log(result) ;
