@@ -506,5 +506,160 @@ company=
 
 var myProxy = new Proxy(company , handler) ;
 
-myProxy.comName =123 ;
+myProxy.comName ="mina" ;
 console.log(myProxy.comName )
+
+//CH04_VID01_Set object
+var mySet1 =new Set();
+//inititilization 
+var mySet2 =new Set(["mina",12 , 333]);
+//add value 
+mySet1.add("mina maher") ;
+var arr=["mina " ," maher"] ;
+mySet1.add(arr) ;
+
+mySet1.add("delet item") ;
+
+console.log(mySet1) ;
+//delete method
+mySet1.delete("delet item") ;
+console.log(mySet1) ;
+//has
+console.log(mySet1.has("mina maher")) ;
+console.log(mySet1.has("delet item")) ;
+
+//clear
+console.log(mySet2) ;
+mySet2.clear()
+console.log(mySet2) ;
+
+//iterator methods
+console.log(mySet1.entries())
+console.log(mySet1.values())
+console.log(mySet1.keys())
+
+//CH04_VID02_Map object
+//empty 
+var employeeRes = new Map()
+// init 
+var compEmp = new Map([["empName" , "Mina Maher"],["empId", 122],["empSalary", 2222]])
+
+// set method
+employeeRes.set("empName" , "Mina Maher");
+employeeRes.set("empID" , 111);
+employeeRes.set("empSalary" , 4000);
+
+//get 
+console.log(compEmp.get("empName"))
+console.log(employeeRes.get("empName"))
+
+//delete
+console.log(compEmp)
+console.log(employeeRes)
+console.log(compEmp.delete("empName"))
+console.log(employeeRes.delete("empName"))
+
+//has 
+console.log(compEmp.has("empName"))
+console.log(employeeRes.has("empName"))
+
+//clear 
+console.log(compEmp.clear())
+console.log(employeeRes.clear())
+
+// iterators
+//empty 
+var resEmpl = new Map()
+// init 
+var manger = new Map([["empName" , "Mina Maher"],["empId", 122],["empSalary", 2222]])
+// set method
+resEmpl.set("empName" , "Mina Maher");
+resEmpl.set("empID" , 111);
+resEmpl.set("empSalary" , 4000);
+
+//iterators entresEmplries values keys
+console.log(manger.entries())
+console.log(manger.values())
+console.log(manger.keys())
+
+console.log(resEmpl.entries())
+console.log(resEmpl.values())
+console.log(resEmpl.keys())
+
+//CH04_VID03_For .. of
+var myArr =[123,22,33,44,55] 
+
+for( val of myArr)
+    {
+        console.log(val) ;
+    }
+
+// CH04_VID04_Example for of with map
+for( entity of  resEmpl)
+    {
+        console.log(entity)
+    }
+console.log("  ")
+for( entity of  resEmpl.entries())
+    {
+        console.log(entity)
+    }
+console.log("  ")
+for( value of  resEmpl.values())
+    {
+        console.log(value)
+    }
+console.log("  ")
+
+for( key of  resEmpl.keys())
+    {
+        console.log(key)
+    }
+ console.log("  ")
+
+// key and value 
+for( [k ,v] of  resEmpl.entries())
+    {
+        console.log(k + " " + v)
+    }
+
+//CH05_VID01_Iterable object
+
+//iterable object
+var arr =[1,2,3,4,5] 
+//iterator object
+var iter =arr[Symbol.iterator]()
+console.log(iter.next()) ;
+console.log(iter.next()) ;
+console.log(iter.next()) ;
+console.log(iter.next()) ;
+console.log(iter.next()) ;
+console.log(iter.next()) ;// out {value: undefined, done: true}
+
+for (iter1 of arr)
+{
+    console.log(iter1)
+}
+
+//CH05_VID02_Generator function (object object to iterable object)
+
+var object={
+    objjName : 'mian' ,
+    objId : 122 ,
+    gen1 : function * gen()
+    {
+        // yield 10 ;
+        // var x =20 +50 ;
+        // console.log(x) ;
+        // yield 30 ;
+        //     console.log("Hi ma") ;
+        yield object.objjName ;
+        yield object.objId ;
+    }
+}
+
+console.log(" Gen")
+for (i of object.gen1())
+{
+    console.log(i)
+}
