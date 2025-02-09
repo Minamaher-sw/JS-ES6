@@ -298,3 +298,213 @@ let x1 =10 ,
     y1 =20 ;
 var result =fun `this is ${x1} and ${y1} and sum of them ${x1+y1}`;
 console.log(result) ;
+
+// CH03_VID05_Array API improvement
+
+var fruits =["apple" ,"banana" ,"strawberry" ,"orange" ,"mango"]
+//every method  &&
+var resuult1= fruits.every((val ,idx ,arr1) =>
+{
+    return val[0] ==="a" ;
+})
+console.log(resuult1);
+//some method   ||
+resuult1= fruits.some((val) =>
+    {
+        return val[0] ==="a" ;
+    })
+console.log(resuult1);
+
+//map method
+resuult1= fruits.map((val) =>
+    {
+        return `i like ${val}` ;
+    })
+console.log(resuult1);
+
+//find method
+resuult1= fruits.find((val) =>
+    {
+        return val === "apple" ;
+    })
+console.log(resuult1);
+
+//filter method
+resuult1= fruits.filter((val) =>
+    {
+        return val[0] === "a" || val[0] === "b";
+    })
+console.log(resuult1);
+
+//CH03_VID06_Object new shorthand creation
+
+//creat object by factory method
+function employee1(nm ,id ,age)
+{
+    return {
+        empName :nm ,
+        empId : id ,
+        empAge :age ,
+        displayInfo : function ()
+        {
+            return `employee name is ${this.empName} , employee id is ${this.empId} and employee age is ${this.empAge}` ;
+        }
+    }
+}
+
+var emp1 = employee1("mina maher" , 123 , 26) ;
+console.log(emp1.displayInfo()) ;
+
+//enhancement
+
+function employee1 ( empName ,empId , empAge )
+{
+    return {
+        empName ,
+        empId ,
+        empAge  ,
+        displayInfo()
+        {
+            return `employee name is ${this.empName} , employee id is ${this.empId} and employee age is ${this.empAge}` ;
+        }
+    }
+}
+
+var emp1 = employee1("mina maher" , 123 , 26) ;
+console.log(emp1.displayInfo()) ;
+
+//CH03_VID08_Options object 
+// CH03_VID09_Object.assign()
+
+function courseDetails(msg="Greetings" ,options ={})
+{
+    let defaultCousreInfo=
+    {
+        courseName : "ES6" ,
+        courseDuration :"3Days" ,
+        supervisor  :"Anonymouse"
+    }
+
+
+    return `${msg} in ${options.courseName} course ,duration of this course is ${options.courseDuration} and supervisor is ${options.supervisor}`
+}
+
+var course1={
+    name :"JS" ,
+    dur :"7 days" ,
+    supervisor : "maharateck"
+}
+console.log(courseDetails("Hello",course1)) ;
+//out 
+//Hello in undefined course ,duration of 
+// this course is undefind and supervisor 
+//is maharateck
+
+//solve undefined we use sme name  of memebers 
+var course2={
+    courseName :"JS" ,
+    courseDuration :"7 days" ,
+}
+console.log(courseDetails("Hello",course2)) ;
+
+//solve problem of forgett one memeber we use assign function 
+function courseDetails1(msg="Greetings" ,options ={})
+{
+    let defaultCousreInfo=
+    {
+        courseName : "ES6" ,
+        courseDuration :"3Days" ,
+        supervisor  :"Anonymouse"
+    }
+
+    let optionsSetting =Object.assign({} ,defaultCousreInfo,options)
+    console.log(optionsSetting)
+    return `${msg} in ${optionsSetting.courseName} course ,duration of this course is ${optionsSetting.courseDuration} and supervisor is ${optionsSetting.supervisor}`
+}
+
+var course3={
+    courseName :"JS" ,
+    courseDuration :"7 days" ,
+    supervisor :"MahraTech" ,
+    courseId :123
+}
+console.log(courseDetails1("Hello",course3)) ;
+
+//CH03_VID10_Destructuring and named arguments solution
+function courseDetails2(
+    {
+        //default values
+        courseName ="ES6"  ,
+        courseDuration = "3 days" ,
+        supervisor = "anonymouse" ,
+        msg ="Graetings"
+    } 
+    ={})
+{
+    return `${msg} in ${courseName} course ,duration of this course is ${courseDuration} and supervisor is ${supervisor}`
+}
+
+var course4={
+    courseName :"JS" ,
+    courseDuration :"7 days" ,
+    supervisor :"MahraTech" ,
+    courseId :123 ,
+    msg :"Hello"
+}
+console.log(courseDetails2(course4)) ;
+
+// proxy 
+handler =
+{
+    set (obj , prop ,value)
+    {
+        if(obj.hasOwnProperty(prop))
+        {
+            //validation 
+            if (prop === 'comName' || prop === "comCEO")
+            {
+                if (typeof value === "string")
+                        obj[prop] = value 
+                else 
+                    throw  `please enter string value `
+                    
+            }
+            else if (prop === "comId")
+            {
+                if (typeof value == "number" && (value < 300 && value > 0))
+                        obj[prop] = value 
+                else 
+                    throw  `please enter integer value and range though 0 to 300 `
+            }
+           
+        }
+        else 
+        throw `${prop} property is not fouund in object `
+
+    },
+    get (obj , prop )
+    {
+        if(obj.hasOwnProperty(prop))
+        {
+            //adding text to property 
+            return `${prop} property is ${obj[prop] }`
+        }
+        else 
+        //at case undefined 
+            throw `${prop} property is not fouund in object `
+    }
+}
+
+
+
+company= 
+{
+    comName : "seimens" ,
+    comId : 222 ,
+    comCEO : "Mina Maher"
+}
+
+var myProxy = new Proxy(company , handler) ;
+
+myProxy.comName =123 ;
+console.log(myProxy.comName )
