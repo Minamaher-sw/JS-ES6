@@ -663,3 +663,266 @@ for (i of object.gen1())
 {
     console.log(i)
 }
+
+// CH06_VID01_Symbol
+let x3 =Symbol("key1")
+let y3 =Symbol("key1")
+
+console.log(x3) ;
+console.log(y3) ;
+
+//check
+console.log(x3 == y3)
+console.log(x3 === y3)
+//key1 key1 
+console.log(x3.description) ;
+console.log(y3.description) ;
+//undefined
+console.log(Symbol.keyFor(x3)) ;
+console.log(Symbol.keyFor(y3)) ;
+
+let x4 =Symbol.for("key2")
+let y4 =Symbol.for("key2")
+
+console.log(x4) ;
+console.log(y4) ;
+//key1 key1 
+console.log(x4.description) ;
+console.log(y4.description) ;
+//undefined
+console.log(Symbol.keyFor(x4)) ;
+console.log(Symbol.keyFor(y4)) ;
+
+//check
+console.log(x4 == y4)
+console.log(x4 === y4)
+
+//CH06_VID02_Symbol.replace()
+
+var str="this is javascript string"
+var newStr =str.replace(/i/g ,"_")
+
+console.log(newStr) ;
+console.log(str) ;
+
+
+var obj ={
+    nm : "abc" ,
+    //iterable method
+    [Symbol.replace](str , idx)
+    {
+        return str.substring(0 ,idx) +" after apply obj"
+    } ,
+    [Symbol.match](str , idx)
+    {
+        return str.substring(0 ,idx) +" after apply obj"
+    }
+}
+var newObjStr =str.replace(obj ,7) ;
+console.log(newObjStr)
+
+//CH06_VID03_Symbol as object property
+var sym=Symbol(10);
+var obj2=
+{
+    nm : "xz" ,
+   [Symbol(10)]:"abc" ,
+   [Symbol.for(10)] : "nmo" ,
+   [sym]:{userInfo:"mina maher" ,favColor:"grean"}
+}
+//enumerable 
+for(i in obj2)
+{
+    console.log(i + " " + obj2[i]) ;
+}
+
+//anonymouuse 
+console.log(obj2[Symbol(10)])
+//sol
+console.log(obj2[Symbol.for(10)]);
+console.log(obj2[sym].userInfo) ;
+obj2[sym].userId =123 ;
+console.log(obj2) ;
+
+//json
+var xxx =JSON.stringify(obj2)
+console.log(xxx) // out {"nm":"xz"}
+
+//CH07_VID01_Class implementation
+class person
+{
+    constructor(pName ="Pepo" , pAge=10 ,pAddr="sohag")
+    {
+        this._personName=pName ;
+        this._personAge = pAge ;
+        this._pesronAddr =pAddr
+    }
+
+    // to dispaly property
+    get prsName()
+    {
+        return this._personName
+    }
+    get prsAge()
+    {
+        return this._personAge
+    }
+
+    set prsName(val)
+    {
+        this._personName = val
+    }
+    set prsAge(val)
+    {
+        this._personAge = val
+    }
+
+    //static
+    static personID =3344444
+    static get persId()
+    {
+        return this.personID
+    }
+    //method 
+    displayInfo()
+    {
+        return `this is  ${this._personName} and him age is ${this._personAge} and him address is ${this._pesronAddr}`
+
+    }
+    // CH07_VID02_Function Overriding
+    toString()
+    {
+        return `i am ${this._personName} and my age is ${this._personAge} and my address is ${this._pesronAddr}`
+    }
+}
+//method 
+person.prototype.displayAddrr =function ()
+{
+    return this._pesronAddr
+}
+//create child
+var per1 =new person("Mina Maher",25 ,"cairo")
+
+console.log(per1.prsName)
+console.log(per1.prsAge)
+
+per1.prsName ="pepo"
+per1.prsAge =30
+console.log(per1.prsName)
+console.log(per1.prsAge)
+
+//static
+console.log(per1.persId) //undefine 
+console.log(person.persId)
+
+//call 
+console.log(per1.displayInfo())
+console.log(per1.toString())
+console.log(per1.displayAddrr())
+
+// CH07_VID03_Using of extends and super in inheritance
+
+//inheritance from person
+class user extends person
+{
+    constructor(userName ,userAge ,userAdd ,userSlaray ,userJob)
+    {
+        //call constructor of parent 
+        super(userName ,userAge ,userAdd) ;
+        this._job=userJob ;
+        this._salary =userSlaray ;
+    }
+    //overriding
+    toString()
+    {
+        //super.toString() get to i am marly and my age is 27 and my address is 123_saq_sohagand
+        return `${super.toString()}and i work as ${this._job} and my salary is ${this._salary}`
+    }
+}
+var user1= new user("marly" ,27 ,"123_saq_sohag" ,3000 ,"engineer") ;
+//call method is found at person 
+//set
+user1.prsName="mariam"
+console.log(user1.prsAge)
+console.log(user1.toString())
+console.log(user1.displayAddrr())
+
+// CH07_VID04_Private members using Symbol
+
+let compSerialNumber= Symbol()
+
+class company1
+{
+    constructor(compName ="swidi" , compLocation ="cairo" ,compNumber =2222222)
+    {
+        this._name =compName ;
+        this._location =compLocation ;
+        // of with symbol private member
+        this[compSerialNumber] =compNumber ;
+    }
+    displayInfo()
+    {
+        return this._name + " " + this._location + " " +this[compSerialNumber]
+    }
+}
+
+var comp1 =new company1("MarcBens" ,"englend", 3333333333)
+
+console.log(comp1.displayInfo()) ;
+//private
+console.log(comp1.compSerialNumber) ;
+console.log(comp1[Symbol()]) ;
+comp1[Symbol()] =12222
+console.log(comp1[Symbol()]) ;
+
+//can only by this way reach compSerialNumber
+console.log(comp1[compSerialNumber]) ;
+
+//CH07_VID05_Private members using # sign
+class company2
+{
+    static locationInfo= "cairo"
+
+    static classInfo()
+    {
+        //this here refare to company2 
+        return `this is static method ${this.locationInfo}`
+    }
+    #_address ="123_st" ;
+    #_func =function ()
+    {
+        return `this is private method`
+    }
+    constructor(compName ="swidi" , compLocation ="cairo" ,compNumber =2222222)
+    {
+        console.log(this.#_func())
+        this._name =compName ;
+        this._location =compLocation ;
+        // of with symbol private member
+        this[compSerialNumber] =compNumber ;
+    }
+    displayInfo()
+    {
+        return this._name + " " + this._location + " " +this[compSerialNumber]
+    }
+    displayAddrr()
+    {
+       
+        return this.#_address ;
+    }
+}
+
+// company2.prototype.displayAddrr1 =function ()
+// {
+//     // Property '#_address' is not accessible outside class 'company2' 
+//     // because it has a private identifier.
+//     // console.log(this.#_address)
+// }
+
+var comp11 =new company2("MarcBens" ,"englend", 3333333333)
+
+console.log(comp11.displayAddrr())
+
+//acess static memeber only by class name 
+console.log(company2.locationInfo)
+console.log(company2.classInfo())
