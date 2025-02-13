@@ -2,9 +2,73 @@
 <html>
     <head>
         <title>ES6</title>
-        <script src="../JS_ES6/part1.js"></script>
+        <!-- <script src="../JS_ES6/part1.js"></script> -->
+<!--        first way-->
+<!--
+        <script type="module">
+            import * as mod from "../JS_ES6/module.js";
+            var result =mod.calAreaCircle(4) ;
+            var sqrResult =mod.disSqrRootValue(16) ;
+            console.log(result) ;
+            console.log(sqrResult)
+        </script>
+-->
+        <!-- second way -->
+         <script type="module" src="../JS_ES6/part1.js"></script>
     </head>
     <body>
+        <script>
+        new Promise(function (suucStat , failState){
+    
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET" ,"std.json") ;
+                    xhr.onreadystatechange = function()
+                    {
+                        if(xhr.readyState == 4)
+                            {
+                                if(xhr.status == 200)
+                                    {
+                                        suucStat(xhr.responseText)
+                                    }
+                                else
+                                    failState("not found")
+                            }
+                       
+                    }
+                    xhr.send("");
+                }).then(function(obj){
+                    var jsonObj = JSON.parse(obj) ;
+                    console.log(jsonObj)
+                }).catch(function(info){
+                    console.log(info)
+                })
+            //CH09_VID04_Promise methods
+            var promise1 =new Promise(function(s ,f){
+                setTimeout(()=>{
+                    s("promise 1 success")
+                } , 5000)
+            });
+            var promise2 =new Promise(function(s ,f){
+                setTimeout(()=>{
+                    s("promise 2 fail")
+                } , 2000)
+            });
+            var promise3 =new Promise(function(s ,f){
+                setTimeout(()=>{
+                    s("promise 3 success")
+                } , 1000)
+            });
+            
+//            promise1.then(alert).catch(console.log);
+//            promise2.then(alert).catch(console.log
+//            promise3.then(alert).catch(console.log);
+            
+            Promise.all([promise1, promise2 ,promise3]).then(alert).catch(console.log)
+            
+//            Promise.race([promise1, promise2 ,promise3]).then(alert).catch(console.lof)
+            
+            
+        </script>
         
     </body>
 </html>
