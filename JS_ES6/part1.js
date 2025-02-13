@@ -191,13 +191,13 @@ var {
 console.log(remObj);
 
 //CH02_VID01_Arrow function
-var sum =(x ,y) =>  {return x+y }
+var sum1 =(x ,y) =>  {return x+y }
 //call
-console.log(sum(55, 6))
+console.log(sum1(55, 6))
 
 //or
-var sum = x => { return x }
-console.log(sum(55))
+var sum2 = x => { return x }
+console.log(sum2(55))
 
 //CH02_VID02_Arrow function and lexical binding
 var employee= {
@@ -247,8 +247,8 @@ var obj3 ={
     objFun2 :newFun2
 }
 
-console.log(obj3.objFun());
-console.log(obj3.objFun2());
+//console.log(obj3.objFun());
+//console.log(obj3.objFun2());
 // CH03_VID01_String API improvement
 //literal creation 
 var myyStr="   welcome to javascript world!! "
@@ -357,7 +357,7 @@ console.log(emp1.displayInfo()) ;
 
 //enhancement
 
-function employee1 ( empName ,empId , empAge )
+function employee122 ( empName ,empId , empAge )
 {
     return {
         empName ,
@@ -370,7 +370,7 @@ function employee1 ( empName ,empId , empAge )
     }
 }
 
-var emp1 = employee1("mina maher" , 123 , 26) ;
+var emp1 = employee122("mina maher" , 123 , 26) ;
 console.log(emp1.displayInfo()) ;
 
 //CH03_VID08_Options object 
@@ -454,7 +454,7 @@ var course4={
 console.log(courseDetails2(course4)) ;
 
 // proxy 
-handler =
+var handler =
 {
     set (obj , prop ,value)
     {
@@ -497,7 +497,7 @@ handler =
 
 
 
-company= 
+var company= 
 {
     comName : "seimens" ,
     comId : 222 ,
@@ -506,7 +506,7 @@ company=
 
 var myProxy = new Proxy(company , handler) ;
 
-myProxy.comName ="mina" ;
+//myProxy.comName ="mina" ;
 console.log(myProxy.comName )
 
 //CH04_VID01_Set object
@@ -515,7 +515,7 @@ var mySet1 =new Set();
 var mySet2 =new Set(["mina",12 , 333]);
 //add value 
 mySet1.add("mina maher") ;
-var arr=["mina " ," maher"] ;
+arr=["mina " ," maher"] ;
 mySet1.add(arr) ;
 
 mySet1.add("delet item") ;
@@ -589,13 +589,13 @@ console.log(resEmpl.keys())
 //CH04_VID03_For .. of
 var myArr =[123,22,33,44,55] 
 
-for( val of myArr)
+for( var val of myArr)
     {
         console.log(val) ;
     }
 
 // CH04_VID04_Example for of with map
-for( entity of  resEmpl)
+for( var entity of  resEmpl)
     {
         console.log(entity)
     }
@@ -605,20 +605,20 @@ for( entity of  resEmpl.entries())
         console.log(entity)
     }
 console.log("  ")
-for( value of  resEmpl.values())
+for( var value of  resEmpl.values())
     {
         console.log(value)
     }
 console.log("  ")
 
-for( key of  resEmpl.keys())
+for( let  key of  resEmpl.keys())
     {
         console.log(key)
     }
  console.log("  ")
 
 // key and value 
-for( [k ,v] of  resEmpl.entries())
+for( let [k ,v] of  resEmpl.entries())
     {
         console.log(k + " " + v)
     }
@@ -626,7 +626,7 @@ for( [k ,v] of  resEmpl.entries())
 //CH05_VID01_Iterable object
 
 //iterable object
-var arr =[1,2,3,4,5] 
+arr =[1,2,3,4,5] 
 //iterator object
 var iter =arr[Symbol.iterator]()
 console.log(iter.next()) ;
@@ -636,7 +636,7 @@ console.log(iter.next()) ;
 console.log(iter.next()) ;
 console.log(iter.next()) ;// out {value: undefined, done: true}
 
-for (iter1 of arr)
+for (let iter1 of arr)
 {
     console.log(iter1)
 }
@@ -659,7 +659,7 @@ var object={
 }
 
 console.log(" Gen")
-for (i of object.gen1())
+for (let i of object.gen1())
 {
     console.log(i)
 }
@@ -731,7 +731,7 @@ var obj2=
    [sym]:{userInfo:"mina maher" ,favColor:"grean"}
 }
 //enumerable 
-for(i in obj2)
+for(let i in obj2)
 {
     console.log(i + " " + obj2[i]) ;
 }
@@ -926,3 +926,124 @@ console.log(comp11.displayAddrr())
 //acess static memeber only by class name 
 console.log(company2.locationInfo)
 console.log(company2.classInfo())
+
+// CH08_VID01_Module and Named export
+//import * as mod from "./module.js"
+//import {calAreaCircle , disSqrRootValue} from "./module.js"
+import {calAreaCircle as calA, disSqrRootValue as disVal} from "./module.js"
+//var result33 =mod.calAreaCircle(4) ;
+//var sqrResult33 =mod.disSqrRootValue(16) ;
+//var result33 =calAreaCircle(4) ;
+//var sqrResult33 =disSqrRootValue(16) 
+var result33 =calA(4) ;
+var sqrResult33 =disVal(16) ;;
+console.log(result33) ;
+console.log(sqrResult33)
+
+
+//CH08_VID02_Default export
+import person22 from './script.js'
+
+var ppp = new person22("mina maher mosadef" ,22 ,"123_st_sohag_mohmn")
+console.log(ppp.displayInfo())
+//more private Uncaught ReferenceError: personNumber is not defined
+//console.log(ppp[personNumber])
+
+
+//CH09_VID01_Promise
+
+var myPromise = new Promise(function(success , failure)
+{
+    //+ is parseint() 
+    var x = +prompt("Enter nuumber here" , "10")
+    
+    if(x >10)
+            success("number in range")
+    else
+            failure("number out range")
+}) 
+
+myPromise.then(function(info)
+              {
+    console.log(info) ;
+})
+myPromise.catch(function(info)
+              {
+    console.log(info) ;
+})
+//CH09_VID02_Chained Promises
+//new Promise(function(tr , fa)
+//           {
+//    var x = +prompt("enter number ","10");
+//    if(x > 10)
+//        tr("good number")
+//    else
+//        fa("bad number")
+//
+//}).then(function(info){
+//    console.log(info)
+//}).catch((function(info){
+//    console.log(info)
+//}));
+//
+//var newPromise = new Promise(function(tr , fa)
+//           {
+//    var x = +prompt("enter number ","10");
+//    if(x > 10)
+//        tr("good number")
+//    else
+//        fa("bad number")
+//
+//})
+//newPromise.then(function(info){
+//    console.log(info)
+//    return new Promise(
+//        function(tr1 , fa1)
+//        {
+//            var x2 = +prompt("enter number ","10");
+//            if(x2 > 10)
+//                tr1("good1 number")
+//            else
+//                fa1("bad1 number")
+//        }
+//    );
+//}).then().then().catch(
+//    (function(info){
+//    console.log(info)
+//    return new Promise(
+//            function(tr2 , fa2)
+//                {
+//                    var x2 = +prompt("enter number ","10");
+//                    if(x2 > 10)
+//                        tr2("good2 number")
+//                    else
+//                        fa2("bad2 number")
+//                }
+//            );
+//}
+//)).then(
+//        (function(info){
+//    console.log(info)
+//}
+//    )).catch(
+//            (function(info){
+//    console.log(info)
+//}
+//        ))
+//newPromise.catch((function(info){
+//    console.log(info)
+//}));
+
+//CH09_VID03_Ajax request using promise
+
+
+
+
+
+
+
+
+
+
+
+
